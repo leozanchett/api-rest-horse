@@ -6,6 +6,7 @@
 	"mainsrc": "./",
 	"projects": [],
 	"dependencies": {
+		"github.com/hashload/handle-exception": "^0.1.4",
 		"github.com/hashload/horse": "^2.0.13",
 		"github.com/hashload/jhonson": "^1.1.1",
 		"https://github.com/hashload/horse-basic-auth": "^v1.1.4",

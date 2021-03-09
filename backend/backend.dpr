@@ -6,7 +6,7 @@ program backend;
 
 uses
   System.SysUtils, Horse,Horse.Compression, Horse.Jhonson, Horse.Commons,
-  Horse.BasicAuthentication, System.JSON;
+  Horse.BasicAuthentication, Horse.HandleException,  System.JSON;
 
 var
   Users : TJSONArray;
@@ -17,6 +17,7 @@ begin
   Users := TJSONArray.Create;
   APP.Use(Compression()).
   Use(Jhonson()).
+  Use(HandleException).
   Use(HorseBasicAuthentication(
     function(const AUsername, APassword: string): Boolean
     begin
@@ -30,12 +31,28 @@ begin
       I: Integer;
       LPong: TJSONArray;
     begin
-      LPong := TJSONArray.Create;
-      for I := 0 to 1000 do
+      try
+        LPong := TJSONArray.Create;
+        for I := 0 to 1000 do
         LPong.Add(TJSONObject.Create(TJSONPair.Create('ping '+i.ToString, 'pong')));
-      Res.Send(LPong);
+        Res.Send(LPong);
+      except on E: Exception do
+        raise EHorseException.Create(E.Message);
+      end;
     end
   );
+
+  APP.Get('/exception',
+    procedure(Req: THorseRequest; Res: THorseResponse; Next: TProc)
+    var
+      LConteudo: TJSONObject;
+    begin
+      raise EHorseException.Create('My Bad !');
+      LConteudo := TJSONObject.Create;
+      LConteudo.AddPair('Nome','Raulzinho');
+      Res.Send<TJSONObject>(LConteudo);
+    end);
+
 
   APP.Get('/users',
     // req = requisição | res = response.
