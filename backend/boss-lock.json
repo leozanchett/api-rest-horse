@@ -25,6 +25,14 @@
 			"artifacts": {},
 			"failed": false,
 			"changed": false
+		},
+		"https://github.com/hashload/horse-compression": {
+			"name": "horse-compression",
+			"version": "1.1.3",
+			"hash": "114ff47bbd16ce85fc3ec9d85da462ab",
+			"artifacts": {},
+			"failed": false,
+			"changed": false
 		}
 	}
 }

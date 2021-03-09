@@ -5,22 +5,36 @@ program backend;
 {$R *.res}
 
 uses
-  System.SysUtils, Horse, Horse.Jhonson, Horse.Commons, Horse.BasicAuthentication,  System.JSON;
+  System.SysUtils, Horse,Horse.Compression, Horse.Jhonson, Horse.Commons,
+  Horse.BasicAuthentication, System.JSON;
 
 var
   Users : TJSONArray;
   APP : THorse;
 
 begin
-  Users := TJSONArray.Create;
   APP := THorse.Create(9000); // porta do servidor
-  APP.Use(Jhonson());
-
-  APP.Use(HorseBasicAuthentication(
+  Users := TJSONArray.Create;
+  APP.Use(Compression()).
+  Use(Jhonson()).
+  Use(HorseBasicAuthentication(
     function(const AUsername, APassword: string): Boolean
     begin
       Result := AUsername.Equals('user') and APassword.Equals('pass');
     end)
+  );
+
+  APP.Get('/ping',
+    procedure(Req: THorseRequest; Res: THorseResponse; Next: TProc)
+    var
+      I: Integer;
+      LPong: TJSONArray;
+    begin
+      LPong := TJSONArray.Create;
+      for I := 0 to 1000 do
+        LPong.Add(TJSONObject.Create(TJSONPair.Create('ping '+i.ToString, 'pong')));
+      Res.Send(LPong);
+    end
   );
 
   APP.Get('/users',
