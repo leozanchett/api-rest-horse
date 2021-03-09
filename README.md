@@ -9,4 +9,4 @@ e executar: boss install <link do repositório github>
 Também foi utilizado os frames Horse, Jhonson, Basic Authentication.
 - https://github.com/HashLoad/horse  / Reponsável por gerênciar a api, servidor local.
 - https://github.com/HashLoad/jhonson / Serialize e Deserialize de json.
-- https://github.com/HashLoad/horse-basic-auth / Autenticação de valores, utilizando a criptográfia base64.
+- https://github.com/HashLoad/horse-basic-auth / Autenticação de valores, utilizando a criptográfia basic auth.
