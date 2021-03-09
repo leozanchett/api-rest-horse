@@ -17,6 +17,14 @@
 			"artifacts": {},
 			"failed": false,
 			"changed": false
+		},
+		"https://github.com/hashload/horse-basic-auth": {
+			"name": "horse-basic-auth",
+			"version": "v1.1.4",
+			"hash": "55fc41c92a7e54292d843b18e0684557",
+			"artifacts": {},
+			"failed": false,
+			"changed": false
 		}
 	}
 }

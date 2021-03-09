@@ -5,7 +5,7 @@ program backend;
 {$R *.res}
 
 uses
-  System.SysUtils, Horse, Horse.Jhonson, Horse.Commons ,  System.JSON;
+  System.SysUtils, Horse, Horse.Jhonson, Horse.Commons, Horse.BasicAuthentication,  System.JSON;
 
 var
   Users : TJSONArray;
@@ -14,42 +14,46 @@ var
 begin
   Users := TJSONArray.Create;
   APP := THorse.Create(9000); // porta do servidor
-  try
-    APP.Use(Jhonson());
+  APP.Use(Jhonson());
 
-    APP.Get('/users',
-      // req = requisição | res = response.
-      procedure(Req: THorseRequest; Res: THorseResponse; Next: TProc)
-      begin
-        Res.Send<TJSONArray>(Users);
-      end
-    );
+  APP.Use(HorseBasicAuthentication(
+    function(const AUsername, APassword: string): Boolean
+    begin
+      Result := AUsername.Equals('user') and APassword.Equals('pass');
+    end)
+  );
 
-    APP.Post('/users',
-      // req = requisição | res = response.
-      procedure(Req: THorseRequest; Res: THorseResponse; Next: TProc)
-      var
-        User : TJSONObject;
-      begin
-        User := Req.Body<TJSONObject>.Clone as TJSONObject;
-        Users.AddElement(User);
-        Res.Send<TJSONAncestor>(User.Clone).Status(THTTPStatus.created); // 201 = created. Por default estava retornando 200.
-      end
-    );
+  APP.Get('/users',
+    // req = requisição | res = response.
+    procedure(Req: THorseRequest; Res: THorseResponse; Next: TProc)
+    begin
+      Res.Send<TJSONArray>(Users);
+    end
+  );
 
-    APP.Delete('/users/:id',
-      procedure(Req: THorseRequest; Res: THorseResponse; Next: TProc)
-      var
-        id: Integer;
-      begin
-        id := Req.Params.Items['id'].ToInteger;
-        Users.Remove(id - 1).Free;
-        Res.Send<TJSONAncestor>(Users.Clone).Status(THTTPStatus.NoContent);
-      end
-    );
+  APP.Post('/users',
+    // req = requisição | res = response.
+    procedure(Req: THorseRequest; Res: THorseResponse; Next: TProc)
+    var
+      User : TJSONObject;
+    begin
+      User := Req.Body<TJSONObject>.Clone as TJSONObject;
+      Users.AddElement(User);
+      Res.Send<TJSONAncestor>(User.Clone).Status(THTTPStatus.created); // 201 = created. Por default estava retornando 200.
+    end
+  );
 
-    APP.Start;
-  finally
-    // FreeAndNil(Users); não é necessário limpar memória pois o Jhonson cuida disso.
-  end;
+  APP.Delete('/users/:id',
+    procedure(Req: THorseRequest; Res: THorseResponse; Next: TProc)
+    var
+      id: Integer;
+    begin
+      id := Req.Params.Items['id'].ToInteger;
+      Users.Remove(id - 1).Free;
+      Res.Send<TJSONAncestor>(Users.Clone).Status(THTTPStatus.NoContent);
+    end
+  );
+
+  APP.Start;
+  // FreeAndNil(Users); não é necessário limpar memória pois o Jhonson cuida disso.
 end.
