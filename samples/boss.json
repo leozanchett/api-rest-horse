@@ -1,0 +1,13 @@
+{
+	"name": "boss ini",
+	"description": "",
+	"version": "1.0.0",
+	"homepage": "",
+	"mainsrc": "./",
+	"projects": [],
+	"dependencies": {
+		"github.com/hashload/jhonson": "^1.1.1",
+		"https://github.com/bittencourtthulio/horse-paginate": ">0.0.0",
+		"https://github.com/viniciussanchez/dataset-serialize": "^v2.2.9"
+	}
+}

@@ -1,0 +1,12 @@
+{
+	"name": "etag",
+	"description": "",
+	"version": "1.0.0",
+	"homepage": "",
+	"mainsrc": "./",
+	"projects": [],
+	"dependencies": {
+		"https://github.com/bittencourtthulio/horse-etag": ">0.0.0",
+		"https://github.com/hashload/jhonson": "^1.1.1"
+	}
+}
