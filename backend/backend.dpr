@@ -6,7 +6,8 @@ program backend;
 
 uses
   System.SysUtils, Horse,Horse.Compression, Horse.Jhonson, Horse.Commons,
-  Horse.BasicAuthentication, Horse.HandleException,  System.JSON;
+  Horse.BasicAuthentication, Horse.HandleException, System.JSON, Horse.Logger,
+  Horse.Logger.Provider.LogFile;
 
 var
   Users : TJSONArray;
@@ -15,8 +16,10 @@ var
 begin
   APP := THorse.Create(9000); // porta do servidor
   Users := TJSONArray.Create;
+  THorseLoggerManager.RegisterProvider(THorseLoggerProviderLogFile.New());
   APP.Use(Compression()).
   Use(Jhonson()).
+  Use(THorseLoggerManager.HorseCallback()).
   Use(HandleException).
   Use(HorseBasicAuthentication(
     function(const AUsername, APassword: string): Boolean

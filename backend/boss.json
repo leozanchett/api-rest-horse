@@ -8,6 +8,8 @@
 	"dependencies": {
 		"github.com/hashload/handle-exception": "^0.1.4",
 		"github.com/hashload/horse": "^2.0.13",
+		"github.com/hashload/horse-logger": "^2.0.2",
+		"github.com/hashload/horse-logger-provider-logfile": "^1.0.2",
 		"github.com/hashload/jhonson": "^1.1.1",
 		"https://github.com/hashload/horse-basic-auth": "^v1.1.4",
 		"https://github.com/hashload/horse-compression": "^1.1.3"
