@@ -1,0 +1,11 @@
+unit CaminhosPC;
+
+interface
+
+implementation
+
+  type Caminhos = record
+
+  end;
+
+end.

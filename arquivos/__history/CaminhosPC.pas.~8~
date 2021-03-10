@@ -1,0 +1,18 @@
+unit CaminhosPC;
+
+
+const
+  ImagemOriginal = 'C:\Users\Leo\Documents\GitHub\API-REST-HORSE\arquivos\image.jpg';
+      ImagemCopiada = 'C:\Users\Leo\Documents\GitHub\API-REST-HORSE\arquivos\image_clone.jpg';
+
+interface
+
+ type
+    Caminhos = record
+
+  end;
+
+implementation
+
+
+end.
