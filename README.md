@@ -16,3 +16,4 @@ Também foi utilizado o Horse como servidor local e os Middlewares Jhonson, Basi
 - https://github.com/HashLoad/horse-logger / Acessar e gerar logs.
 - https://github.com/bittencourtthulio/Horse-Paginate / Paginação de Dados JSON.
 - https://github.com/viniciussanchez/dataset-serialize / Serialização de JSON para Dataset e vice-versa.
+- https://github.com/bittencourtthulio/Horse-ETag / Controle de requisições baseadas em uma tag/hash.
